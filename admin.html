@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>لوحة التحكم</title><link rel="manifest" href="admin.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="theme-color" content="#9A7414"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="نبّهني">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--bg:#fff;--card:#fff;--ink:#161616;--mute:#6F6F6F;--line:#DCC98F;--acc:#161616;--on:#fff}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif;padding:env(safe-area-inset-top) 16px 40px}
+.w{max-width:720px;margin:auto}h2{margin:22px 0 10px}.c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;line-height:1.9;font-size:15px}
+input,select,button{font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin:2px}
+button{cursor:pointer;background:var(--acc);color:var(--on);border:0;font-weight:600}button.g{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+#qm{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:9}#qm div{background:#fff;color:#000;padding:20px;border-radius:18px;text-align:center;max-width:90vw}#qb{display:inline-block;padding:10px;background:#fff}
+</style></head><body><div class="w">
+<form id="login" hidden style="margin-top:60px"><h2>دخول الأدمن</h2><input id="em" type="email" placeholder="الإيميل" required><input id="pw" type="password" placeholder="الباسورد" required><button>دخول</button><div id="le" style="color:#a8321f"></div></form>
+<div id="main" hidden><div style="display:flex;justify-content:space-between;align-items:center"><h2>لوحة نبّهني</h2><div><button class="g" id="inst" hidden>📲 تثبيت التطبيق</button><button class="g" id="out">خروج</button></div></div><div class="c" id="ios" hidden>📲 على الآيفون: دوس زرار المشاركة في Safari، وبعدها «Add to Home Screen».</div>
+<h2>الطلبات</h2><div id="orders"></div>
+<h2>الستيكرات</h2><div id="stk"></div>
+<h2>أكواد الخصم</h2><div class="c"><input id="pc" placeholder="الكود" style="width:110px"><input id="pp" type="number" min="1" max="90" placeholder="%" style="width:70px"><input id="pm" type="number" placeholder="أقصى استخدام" style="width:120px"><button id="pa">إضافة</button></div><div id="pr"></div></div></div>
+<div id="qm" hidden><div><div id="qb"></div><p id="ql" dir="ltr" style="font-size:13px;word-break:break-all"></p><button onclick="print()">طباعة</button> <button class="g" onclick="qm.hidden=true">إغلاق</button></div></div>
+<script src="config.js"></script>
+<script>
+var ST={new:"جديد",confirmed:"اتأكد",shipped:"اتشحن",delivered:"اتسلّم",cancelled:"ملغي"},db=supabase.createClient(CFG.url,CFG.key),$=function(i){return document.getElementById(i)},O=[],
+esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+function gen(){var a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",v=crypto.getRandomValues(new Uint8Array(8)),s="";v.forEach(function(x){s+=a[x%a.length]});return s}
+function qr(code){var u=CFG.site+"/s.html?c="+code;$("qb").innerHTML="";new QRCode($("qb"),{text:u,width:220,height:220});$("ql").textContent=u;$("qm").hidden=false}
+async function start(){var s=await db.auth.getSession();if(!s.data.session){$("login").hidden=false;return}
+var a=await db.rpc("is_admin");if(a.data!==true){$("le").textContent="الحساب ده مش أدمن";await db.auth.signOut();$("login").hidden=false;return}
+$("login").hidden=true;$("main").hidden=false;load()}
+$("login").onsubmit=async function(e){e.preventDefault();var r=await db.auth.signInWithPassword({email:$("em").value,password:$("pw").value});if(r.error){$("le").textContent="بيانات الدخول غلط";return}start()};
+$("out").onclick=async function(){await db.auth.signOut();location.reload()};
+async function load(){
+var r=await Promise.all([db.from("orders").select("*").order("created_at",{ascending:false}).limit(100),db.from("stickers").select("*").order("created_at",{ascending:false}).limit(200),db.from("promo_codes").select("*")]);
+O=r[0].data||[];var S=r[1].data||[],P=r[2].data||[],has={};S.forEach(function(x){has[x.order_id]=1});
+$("orders").innerHTML=O.map(function(x){return '<div class="c"><b>'+esc(x.id)+'</b> · '+esc(x.name)+' · <span dir="ltr">'+esc(x.phone)+'</span> <a href="https://wa.me/'+esc(String(x.phone).replace("+",""))+'" target="_blank" rel="noopener">واتساب</a><br>'+esc(x.plan)+' · '+x.total+' ج.م · '+esc(x.pay)+'<br>'+esc(x.gov)+'، '+esc(x.city)+'، '+esc(x.address)+(x.extra_phones&&x.extra_phones.length?'<br>🚨 طوارئ: <span dir="ltr">'+x.extra_phones.map(function(n){return esc(n)}).join(" · ")+'</span>':'')+'<br><select data-o="'+esc(x.id)+'">'+["new","confirmed","shipped","delivered","cancelled"].map(function(t){return '<option value="'+t+'"'+(t==x.status?' selected':'')+'>'+ST[t]+'</option>'}).join("")+'</select> '+(has[x.id]?'✓ ليه ستيكر':'<button data-mk="'+esc(x.id)+'">إنشاء ستيكر</button>')+'</div>'}).join("")||"مفيش طلبات";
+$("stk").innerHTML=S.map(function(x){return '<div class="c"><b dir="ltr">'+esc(x.code)+'</b> · <span dir="ltr">'+esc(x.owner_phone)+'</span> · '+esc(x.plan)+(x.extra_phones&&x.extra_phones.length?' · 🚨 '+x.extra_phones.length+' طوارئ':'')+'<br><label><input type="checkbox" data-ac="'+esc(x.code)+'"'+(x.active?' checked':'')+'> شغال</label> <select data-ch="'+esc(x.code)+'">'+["whatsapp","sms","both"].map(function(t){return '<option'+(t==x.channel?' selected':'')+'>'+t+'</option>'}).join("")+'</select> <button class="g" data-qr="'+esc(x.code)+'">QR</button></div>'}).join("")||"مفيش ستيكرات";
+$("pr").innerHTML=P.map(function(x){return '<div class="c">'+esc(x.code)+' · '+x.percent+'% · استخدم '+x.used+(x.max_uses?'/'+x.max_uses:'')+' <label><input type="checkbox" data-pa="'+esc(x.code)+'"'+(x.active?' checked':'')+'> شغال</label></div>'}).join("")}
+document.addEventListener("click",async function(e){var t=e.target;
+if(t.dataset.qr)qr(t.dataset.qr);
+if(t.dataset.mk){var o=O.find(function(x){return x.id==t.dataset.mk}),c=gen();var r=await db.from("stickers").insert({code:c,order_id:o.id,owner_phone:o.phone,plan:o.plan,extra_phones:o.extra_phones||[]});if(r.error)return alert(r.error.message);await load();qr(c)}});
+document.addEventListener("change",async function(e){var t=e.target,d=t.dataset;
+if(d.o)await db.from("orders").update({status:t.value}).eq("id",d.o);
+if(d.ac)await db.from("stickers").update({active:t.checked}).eq("code",d.ac);
+if(d.ch)await db.from("stickers").update({channel:t.value}).eq("code",d.ch);
+if(d.pa)await db.from("promo_codes").update({active:t.checked}).eq("code",d.pa)});
+$("pa").onclick=async function(){var c=$("pc").value.trim().toUpperCase(),p=+$("pp").value;if(!c||!p)return;var r=await db.from("promo_codes").upsert({code:c,percent:p,max_uses:+$("pm").value||null});if(r.error)alert(r.error.message);else{$("pc").value="";load()}};
+var dp=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;$("inst").hidden=false});
+$("inst").onclick=async function(){if(!dp)return;dp.prompt();await dp.userChoice;dp=null;$("inst").hidden=true};
+window.addEventListener("appinstalled",function(){$("inst").hidden=true});
+if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone)$("ios").hidden=false;
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+start();
+</script></body></html>

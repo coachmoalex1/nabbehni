@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="color-scheme" content="light"><style>html{color-scheme:only light}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<title>تتبع طلبي | نبّهني</title>
+<meta name="theme-color" content="#FFFFFF"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="icon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#161616;--mute:#6F6F6F;--line:#E3D5A8;--acc:#9A7414;--soft:#FBF6E6;--err:#a8321f}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:Cairo,Tahoma,sans-serif;line-height:1.9;padding:env(safe-area-inset-top,0px) 20px calc(40px + env(safe-area-inset-bottom,0px))}
+.w{max-width:520px;margin:0 auto}
+header{padding:16px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}
+.back{color:var(--acc);font-weight:600;text-decoration:none}
+h1{font-size:26px;margin:8px 0 4px}
+p.s{color:var(--mute);margin:0 0 16px}
+input,select{width:100%;font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 10px;color:var(--ink);background:#fff}
+input:focus,select:focus{outline:3px solid #C9A227;outline-offset:1px}
+button{width:100%;font:inherit;font-weight:600;font-size:17px;border:0;border-radius:14px;padding:13px;background:var(--ink);color:#fff;cursor:pointer}
+button:disabled{opacity:.55}
+#e{color:var(--err);min-height:26px;margin:8px 0}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px}
+.tl{list-style:none;margin:14px 0 0;padding:0}
+.tl li{position:relative;padding:0 38px 18px 0;color:var(--mute)}
+.tl li:before{content:"";position:absolute;right:0;top:4px;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);background:#fff}
+.tl li:after{content:"";position:absolute;right:10px;top:28px;bottom:-2px;width:2px;background:var(--line)}
+.tl li:last-child:after{display:none}
+.tl li.done{color:var(--ink)}.tl li.done:before{background:var(--acc);border-color:var(--acc)}.tl li.done:after{background:var(--acc)}
+.tl li.now{font-weight:800}.tl li.now:before{box-shadow:0 0 0 5px rgba(154,116,20,.2)}
+.msg{font-size:18px;font-weight:800;margin:0}
+.meta{color:var(--mute);font-size:14px}
+.x{color:var(--err)}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:var(--mute);font-size:14px;text-align:center}
+footer a{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="w">
+<header><a class="logo" href="index.html">نبّهني</a><a class="back" href="index.html">← رجوع للموقع</a></header>
+<h1>تتبع طلبي</h1>
+<p class="s">اختار رقم طلبك من القايمة (مكتوب في صفحة «وصل طلبك») واكتب رقم الموبايل اللي طلبت بيه.</p>
+<form id="f" novalidate>
+<select id="o" aria-label="رقم الطلب"><option value="">اختار رقم طلبك</option></select>
+<input id="p" type="tel" placeholder="رقم الموبايل 01xxxxxxxxx" inputmode="numeric" maxlength="11" autocomplete="tel" dir="ltr" style="text-align:right">
+<button id="b">اعرف طلبي فين</button>
+</form>
+<div id="e" role="alert"></div>
+<div id="r" class="card" hidden aria-live="polite"></div>
+<footer>محتاج مساعدة؟ كلمنا على واتساب:<br>
+<a href="https://wa.me/201032537361" dir="ltr">01032537361</a> · <a href="https://wa.me/201100512810" dir="ltr">01100512810</a><br>
+<a href="terms.html">الشروط والخصوصية</a></footer>
+</div>
+<script src="config.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+var STEPS=[["new","استلمنا طلبك","هنكلمك على الواتساب نأكد البيانات."],["confirmed","اتأكد الطلب","بنجهّز الستيكر بتاعك."],["ready","جاهز للشحن","الطلب جاهز وهيخرج من عندنا قريب."],["shipped","خرج للتوصيل","طلبك خرج من عندنا وفي الطريق ليك."],["delivered","اتسلّم","وصلك طلبك، نتمنى يعجبك."]];
+var PN={basic:"أساسية",premium:"بريميوم",elite:"إيليت"};
+// قايمة أرقام الطلبات من 1 لـ 1000 (غيّر MAXN لو الطلبات زادت)
+var MAXN=1000,sl=$("o");for(var n=1;n<=MAXN;n++){var op=document.createElement("option");op.value="N"+String(n).padStart(5,"0");op.textContent=n;sl.appendChild(op)}
+var q=new URLSearchParams(location.search).get("o"),sv=null;try{sv=JSON.parse(localStorage.getItem("nb_last")||"null")}catch(e){}
+if(!q&&sv&&sv.id)q=sv.id;if(sv&&sv.phone&&/^01[0125]\d{8}$/.test(sv.phone)&&(!new URLSearchParams(location.search).get("o")||new URLSearchParams(location.search).get("o")===sv.id))$("p").value=sv.phone;if(q){q=q.toUpperCase().slice(0,12);if(/^N\d{5,9}$/.test(q)&&Array.prototype.some.call(sl.options,function(x){return x.value===q}))sl.value=q}
+function rpc(n,b){return fetch(CFG.url+"/rest/v1/rpc/"+n,{method:"POST",headers:{apikey:CFG.key,...(/^sb_/.test(CFG.key)?{}:{Authorization:"Bearer "+CFG.key}),"Content-Type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json()})}
+function li(t,c){var l=document.createElement("li");l.className=c;l.textContent=t;return l}
+function show(d){var r=$("r");r.hidden=false;r.textContent="";
+var h=document.createElement("p");h.className="msg";var m=document.createElement("p");m.className="meta";
+var dt="";try{dt=new Date(d.created).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})}catch(e){}
+m.textContent="طلب "+d.id+" · باقة "+(PN[d.plan]||d.plan)+(dt?" · "+dt:"");
+if(d.status==="cancelled"){h.textContent="الطلب ده اتلغى";h.className="msg x";r.append(h,m);return}
+var i=STEPS.findIndex(function(s){return s[0]===d.status});if(i<0)i=0;
+h.textContent=STEPS[i][1];var s=document.createElement("p");s.textContent=STEPS[i][2];
+var ul=document.createElement("ul");ul.className="tl";
+STEPS.forEach(function(x,k){ul.appendChild(li(x[1],k<i?"done":k===i?"done now":""))});
+r.append(h,s,m,ul)}
+$("f").onsubmit=function(e){e.preventDefault();var o=$("o").value.trim().toUpperCase(),p=$("p").value.trim();$("e").textContent="";$("r").hidden=true;
+if(!o){$("e").textContent="اختار رقم طلبك الأول.";return}
+if(!/^N\d{5,9}$/.test(o)||!/^01[0125]\d{8}$/.test(p)){$("e").textContent="راجع رقم الطلب ورقم الموبايل.";return}
+$("b").disabled=true;
+rpc("track_order",{p_id:o,p_phone:"+2"+p}).then(function(d){$("b").disabled=false;if(!d||!d.ok){$("e").textContent=(d&&d.err)||"حصلت مشكلة، حاول تاني.";return}show(d)}).catch(function(){$("b").disabled=false;$("e").textContent="مفيش اتصال، حاول تاني."})};
+</script>
+</body>
+</html>

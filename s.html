@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="color-scheme" content="light"><style>html{color-scheme:only light}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}</style><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>نبّهني | NABBEHNI</title>
+<link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="icon-180.png"><meta name="theme-color" content="#FFFBEA">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://yeqnfpzmjsebmuilxghi.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#161616;--mute:#6F6F6F;--line:#E3D5A8;--gold:#9A7414;--ok:#1f7a45;--err:#a8321f;--soft:#FBF6E6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;color:var(--ink);font-family:Cairo,Tahoma,sans-serif;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom);background:radial-gradient(900px 520px at 50% -8%,#F6E7B4 0%,#FFFAEA 42%,#fff 100%) fixed}
+.w{max-width:440px;margin:auto;text-align:center;padding:28px 0 20px}
+.cr{width:76px;height:auto;display:block;margin:0 auto}
+.brand{font-weight:800;font-size:38px;line-height:1.5;background:linear-gradient(135deg,#C9A227,#8A6A12);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-size:13px;letter-spacing:.5em;font-weight:600;line-height:1.2;padding-inline-start:.5em}
+h1{font-size:22px;margin:22px 0 6px}p{color:var(--mute);line-height:1.8;margin:0 0 16px}
+.bt{display:flex;align-items:center;gap:14px;width:100%;font:inherit;font-size:18px;font-weight:600;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px 18px;margin:10px 0;cursor:pointer;text-align:start;box-shadow:0 2px 10px rgba(154,116,20,.08)}
+.bt .e{font-size:26px;width:36px;text-align:center}
+.bt:active,.bt:focus-visible{border-color:var(--gold);background:var(--soft);outline:none}.bt:disabled{opacity:.5}
+#r{min-height:30px;font-weight:600;margin-top:14px;line-height:1.7}#r.ok{color:var(--ok)}#r.er{color:var(--err)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g2 .bt{flex-direction:column;text-align:center;gap:4px;padding:14px 8px;font-size:15px;margin:0}.g2 .bt .e{width:auto}.bt.u{border-color:#e7b4aa;background:#fff5f3;color:var(--err)}h2{font-size:15px;color:var(--mute);margin:18px 0 8px;text-align:start}details{text-align:start;background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 14px;margin:14px 0}summary{font-weight:600;cursor:pointer}input{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:14px;margin-top:8px;direction:ltr;text-align:start}#rp{margin-top:10px;font-weight:600;color:var(--ok);line-height:1.8}.ft{color:var(--mute);font-size:13px;margin-top:22px}.ft a{color:inherit}
+</style></head><body><div class="w">
+<svg class="cr" viewBox="-3 -3 70 64" aria-hidden="true"><defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E08A"/><stop offset=".5" stop-color="#C9A227"/><stop offset="1" stop-color="#8A6A12"/></linearGradient></defs><path d="M8 42 3 16l16 12L32 7l13 21 16-12-5 26Z" fill="url(#gd)" stroke="#7A5C0E" stroke-width="1.6" stroke-linejoin="round"/><rect x="8" y="45" width="48" height="9" rx="3" fill="url(#gd)" stroke="#7A5C0E" stroke-width="1.6"/><g fill="url(#gd)" stroke="#7A5C0E" stroke-width="1.4"><circle cx="3" cy="14" r="3.6"/><circle cx="32" cy="5" r="3.6"/><circle cx="61" cy="14" r="3.6"/></g><g fill="#fff" opacity=".9"><circle cx="32" cy="34" r="3"/><circle cx="19" cy="37" r="2"/><circle cx="45" cy="37" r="2"/></g></svg>
+<div class="brand">نبّهني<small>NABBEHNI</small></div>
+<h1>ابعت تنبيه لصاحب العربية</h1><p>اختار الرسالة المناسبة. رقمك مش هيظهر، ورقم صاحب العربية كمان مش هيظهر لك.</p>
+<div id="inf" hidden style="background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;margin:10px 0;text-align:start;line-height:1.9"></div>
+<h2>🚨 عاجل</h2>
+<button class="bt u" data-m="tamper"><span class="e">🚨</span>حد بيحاول يفتح العربية أو بيلعب فيها</button>
+<button class="bt u" data-m="smoke"><span class="e">🔥</span>دخان أو ريحة حريق</button>
+<h2>تنبيهات عادية</h2>
+<div class="g2">
+<button class="bt" data-m="lights"><span class="e">💡</span>النور شغال</button>
+<button class="bt" data-m="window"><span class="e">🪟</span>الشباك مفتوح</button>
+<button class="bt" data-m="door"><span class="e">🚪</span>باب أو شنطة مفتوحة</button>
+<button class="bt" data-m="block"><span class="e">🚧</span>سادّة الطريق</button>
+<button class="bt" data-m="tire"><span class="e">🛞</span>الكاوتش فيه مشكلة</button>
+<button class="bt" data-m="alarm"><span class="e">🔊</span>الإنذار شغّال</button>
+<button class="bt" data-m="leak"><span class="e">💧</span>تسريب تحت العربية</button>
+<button class="bt" data-m="hit"><span class="e">💥</span>حد خبّط العربية</button>
+</div>
+<button class="bt" data-m="other" style="margin-top:10px"><span class="e">💬</span>حاجة تانية</button>
+<details open id="dt"><summary>📞 عايز صاحب العربية يتصل بيك؟ (اختياري)</summary><input id="cb" type="tel" inputmode="tel" maxlength="16" placeholder="رقم موبايلك" autocomplete="tel"><input id="cb2" type="tel" inputmode="tel" maxlength="16" placeholder="رقم تاني (اختياري)" style="margin-top:8px"><button type="button" id="cbs" class="bt" style="margin-top:10px;padding:8px;font-size:15px">💾 حفظ</button><p id="cbm" style="margin:8px 0 0;font-size:13px">رقمك هيوصل لصاحب العربية بس لو كتبته، وإنت اللي بتقرر.</p></details>
+<div id="cf" style="margin:10px auto;display:flex;justify-content:center"></div><div id="r" role="status" aria-live="polite"></div><div id="rp" role="status" aria-live="polite"></div>
+<div class="ft">نبّهني · <a href="terms.html">الشروط والخصوصية</a></div></div>
+<script src="config.js"></script>
+<script>
+var c=(new URLSearchParams(location.search).get("c")||"").toUpperCase(),r=document.getElementById("r"),rp=document.getElementById("rp"),OK=/^[A-Z2-9]{8}$/.test(c),API=CFG.url+"/functions/v1/"+(CFG.fn||"notify"),HD={"Content-Type":"application/json",apikey:CFG.key};
+function say(t,k){r.textContent=t;r.className=k||""}
+function post(o,n){return fetch(API,{method:"POST",headers:HD,body:JSON.stringify(o)}).then(function(x){return x.json()}).catch(function(e){if(n)throw e;return new Promise(function(k){setTimeout(k,1500)}).then(function(){return post(o,1)})})}
+if(!OK){say("الرابط ده مش صحيح. اتأكد إنك مسحت الـ QR كامل.","er");document.querySelectorAll("button").forEach(function(b){b.disabled=true})}
+else post({action:"info",code:c}).then(function(j){if(!j.ok||!j.items||!j.items.length)return;var L={brand:"الماركة",model:"الموديل",year:"السنة",color:"اللون",plate:"اللوحة",name:"الاسم",blood:"فصيلة الدم",emergency:"طوارئ",medical:"ملاحظات طبية"},bx=document.getElementById("inf");j.items.forEach(function(it){var d=document.createElement("div"),b=document.createElement("b");b.textContent=(L[it.k]||it.k)+": ";d.appendChild(b);d.appendChild(document.createTextNode(it.v));bx.appendChild(d)});bx.hidden=false}).catch(function(){});
+var CT="",CW=null;
+if(CFG.turnstile){var sc=document.createElement("script");sc.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";sc.async=true;sc.onload=function(){try{CW=turnstile.render("#cf",{sitekey:CFG.turnstile,appearance:"interaction-only",callback:function(t){CT=t},"expired-callback":function(){CT=""},"error-callback":function(){CT=""}})}catch(e){}};document.head.appendChild(sc)}
+function tok(){return new Promise(function(ok){var n=0;(function w(){if(!CFG.turnstile||CT||++n>40)return ok(CT);setTimeout(w,200)})()})}
+var PT=null;
+function watch(rid){var n=0;clearInterval(PT);rp.textContent="⏳ مستنيين رد صاحب العربية (لو بيستخدم التطبيق أو تليجرام)...";
+PT=setInterval(function(){if(++n>24||document.hidden&&n>24){clearInterval(PT);if(!rp.dataset.got)rp.textContent="";return}
+post({action:"scan_reply",rid:rid}).then(function(j){if(j.ok&&j.reply){clearInterval(PT);rp.dataset.got=1;rp.textContent="💬 صاحب العربية رد: "+j.reply}}).catch(function(){})},8000)}
+document.querySelectorAll("button[data-m]").forEach(function(b){b.onclick=function(){
+if(!OK){say("الكود مش صحيح.","er");return}
+var cb=document.getElementById("cb").value.replace(/[^\d+]/g,""),cb2=document.getElementById("cb2").value.replace(/[^\d+]/g,"");if((cb&&!/^\+?\d{7,15}$/.test(cb))||(cb2&&!/^\+?\d{7,15}$/.test(cb2))){say("رقم التواصل غير صحيح، اكتبه أرقام بس أو سيبه فاضي.","er");return}if(cb2&&!cb){say("اكتب رقمك الأساسي الأول.","er");return}
+b.disabled=true;say("جاري الإرسال...");rp.textContent="";delete rp.dataset.got;
+tok().then(function(t){return post({code:c,msg:b.dataset.m,cb2:cb2||undefined,cb:cb||undefined,cf:t||undefined})}).then(function(j){CT="";try{if(CW!==null)turnstile.reset(CW)}catch(e){}if(j.ok){say("✓ اتبعت التنبيه لصاحب العربية. شكرًا ليك!","ok");if(j.rid)watch(j.rid)}else say(j.err||"حصلت مشكلة","er");setTimeout(function(){b.disabled=false},4000)})
+.catch(function(){say("مفيش اتصال، حاول تاني.","er");b.disabled=false})}});
+
+(function(){var a=document.getElementById("cb"),b=document.getElementById("cb2"),m=document.getElementById("cbm"),ok=/^\+?\d{7,15}$/;
+try{var v=JSON.parse(localStorage.getItem("nb_cb")||"null");if(v){a.value=v[0]||"";b.value=v[1]||""}}catch(e){}
+document.getElementById("cbs").onclick=function(){var x=a.value.replace(/[^\d+]/g,""),y=b.value.replace(/[^\d+]/g,"");
+if(!x&&!y){try{localStorage.removeItem("nb_cb")}catch(e){}m.textContent="اتمسح. مش هنبعت أي رقم.";return}
+if((x&&!ok.test(x))||(y&&!ok.test(y))){m.textContent="الرقم غير صحيح، اكتبه أرقام بس.";return}
+if(y&&!x){m.textContent="اكتب رقمك الأساسي الأول.";return}
+try{localStorage.setItem("nb_cb",JSON.stringify([x,y]))}catch(e){}m.textContent="✓ اتحفظ، وهيوصل لصاحب العربية مع التنبيه.";};})();
+</script></body></html>

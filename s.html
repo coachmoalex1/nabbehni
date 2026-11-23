@@ -58,7 +58,7 @@ document.querySelectorAll("button[data-m]").forEach(function(b){b.onclick=functi
 if(!OK){say("الكود مش صحيح.","er");return}
 var cb=document.getElementById("cb").value.replace(/[^\d+]/g,""),cb2=document.getElementById("cb2").value.replace(/[^\d+]/g,"");if((cb&&!/^\+?\d{7,15}$/.test(cb))||(cb2&&!/^\+?\d{7,15}$/.test(cb2))){say("رقم التواصل غير صحيح، اكتبه أرقام بس أو سيبه فاضي.","er");return}if(cb2&&!cb){say("اكتب رقمك الأساسي الأول.","er");return}
 b.disabled=true;say("جاري الإرسال...");rp.textContent="";delete rp.dataset.got;
-tok().then(function(t){return post({code:c,msg:b.dataset.m,cb2:cb2||undefined,cb:cb||undefined,cf:t||undefined})}).then(function(j){CT="";try{if(CW!==null)turnstile.reset(CW)}catch(e){}if(j.ok){say("✓ اتبعت التنبيه لصاحب العربية. شكرًا ليك!","ok");if(j.rid)watch(j.rid)}else say(j.err||"حصلت مشكلة","er");setTimeout(function(){b.disabled=false},4000)})
+tok().then(function(t){return post({code:c,msg:b.dataset.m,cb2:cb2||undefined,cb:cb||undefined,cf:t||undefined})}).then(function(j){CT="";try{if(CW!==null)turnstile.reset(CW)}catch(e){}if(j.ok){say("✓ اتسجّل طلب التنبيه. ده مش تأكيد إن صاحب العربية شافه. لو في خطر اتصل بخدمات الطوارئ.","ok");if(j.rid)watch(j.rid)}else say(j.err||"حصلت مشكلة","er");setTimeout(function(){b.disabled=false},4000)})
 .catch(function(){say("مفيش اتصال، حاول تاني.","er");b.disabled=false})}});
 
 (function(){var a=document.getElementById("cb"),b=document.getElementById("cb2"),m=document.getElementById("cbm"),ok=/^\+?\d{7,15}$/;
